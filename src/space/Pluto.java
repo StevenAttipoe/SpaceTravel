@@ -10,7 +10,7 @@ public class Pluto extends CelestialBody{
 
     public void getInfo(boolean isAlien){
         if(isAlien){
-            //do something
+            //do something new
         }
     }
 
