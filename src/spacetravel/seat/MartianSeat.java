@@ -1,8 +1,10 @@
 package spacetravel.seat;
 
+import spacetravel.Money.Money;
+
 public class MartianSeat extends Seat{
-    public MartianSeat(int id,String name) {
-        super(id,name);
+    public MartianSeat(int id, String name, Money amount) {
+        super(id,name,amount);
     }
 
     @Override

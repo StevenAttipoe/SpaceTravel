@@ -4,7 +4,7 @@ import spacetravel.seat.Seat;
 
 import java.util.List;
 
-public class Bulletship extends SpaceShip{
+public class Bulletship extends SpaceShip {
 
     public Bulletship() {
         super(100, 1800, 2);
@@ -14,9 +14,9 @@ public class Bulletship extends SpaceShip{
         super(100, 1800, 2,structureOfSeats);
     }
 
-//    public int getSpeed() {
-//        return 1800;
-//    }
+    public int getSpeed() {
+        return 1800;
+    }
 
     @Override
     public void setSpeed(int speed) {

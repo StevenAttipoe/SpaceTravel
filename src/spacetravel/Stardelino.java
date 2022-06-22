@@ -13,7 +13,7 @@ public class Stardelino extends SpaceShip {
     public Stardelino(List<Seat> structureOfSeats) {
         super(80, 900, 8,structureOfSeats);
     }
-//    public int getSpeed() {
-//        return 900;
-//    }
+    public int getSpeed() {
+        return 900;
+    }
 }

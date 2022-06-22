@@ -1,6 +1,5 @@
 package spacetravel;
 
-import spacetravel.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import java.util.Collection;
@@ -76,40 +75,74 @@ public class CompanyTest {
         Assert.assertEquals(1700, totalCapacityOfturntablGalactic.get());
     }
 
-//    @Test
-//    public void totalSizeOfFleetWhereSafetyRatingGT4(){
-//        List<SpaceShip> combinedList =
-//                 Stream.of(spaceT.getFleet(),turntablGalactic.getFleet())
-//                         .flatMap(Collection::stream)
-//                         .collect(Collectors.toList());
-//
-//        int count = (int) combinedList.stream()
-//                .filter(spaceShip -> spaceShip.getSafetyRating()>4)
-//                .reduce(0,SpaceShip::getCapacity);
-//
-//        Assert.assertEquals(42,count);
-//    }
+    @Test
+    public void totalSizeOfFleetWhereSafetyRatingGT4(){
+        List<SpaceShip> combinedList =
+                 Stream.of(spaceT.getFleet(),turntablGalactic.getFleet())
+                         .flatMap(Collection::stream)
+                         .collect(Collectors.toList());
+
+        int count = (int) combinedList.stream()
+                .filter(spaceShip -> spaceShip.getSafetyRating()>4)
+                .mapToInt(spaceShip -> spaceShip.getCapacity())
+                .sum();
+
+        Assert.assertEquals(2000,count);
+    }
 
     @Test
     public void fastestFleet(){
-        int maxSpped = 1800;
-        int countSpaceT = (int) spaceT.getFleet().stream().filter(spaceShip -> spaceShip.getSpeed()==maxSpped).count();
-        int countTurntablG = (int) turntablGalactic.getFleet().stream().filter(spaceShip -> spaceShip.getSpeed()==maxSpped).count();
+        List<SpaceShip> combinedList =
+                Stream.of(spaceT.getFleet(),turntablGalactic.getFleet())
+                        .flatMap(Collection::stream)
+                        .collect(Collectors.toList());
 
-        String fastestFleet = (countSpaceT > countTurntablG) ? spaceT.getCompanyName() : turntablGalactic.getCompanyName();
+        AtomicInteger maxSpeed = new AtomicInteger();
+        combinedList.forEach(spaceShip -> maxSpeed.set(Math.max(maxSpeed.get(), spaceShip.getSpeed())));
+
+        int countSpaceT = (int) spaceT.getFleet().stream()
+                .filter(spaceShip -> spaceShip.getSpeed()== maxSpeed.get())
+                .count();
+
+        int countTurntablG = (int) turntablGalactic.getFleet().stream()
+                .filter(spaceShip -> spaceShip.getSpeed()== maxSpeed.get())
+                .count();
+
+        String fastestFleet = (countSpaceT > countTurntablG) ? spaceT.getCompanyName()
+                : turntablGalactic.getCompanyName();
+
         Assert.assertEquals(fastestFleet,"SpaceT");
     }
 
-//    @Test
-//    public void warpshipTest() throws Exception {
-//        Bulletship bulletship = new Bulletship();
-//        bulletship.setSpeed(1500);
-//        Assert.assertEquals(1500,bulletship.getSpeed());
-//    }
+    @Test
+    public void fastestFleetPostWarp(){
+        List<SpaceShip> combinedList =
+                Stream.of(spaceT.getFleet(),turntablGalactic.getFleet())
+                        .flatMap(Collection::stream)
+                        .collect(Collectors.toList());
+
+        AtomicInteger maxSpeed = new AtomicInteger();
+        combinedList.forEach(spaceShip ->
+                maxSpeed.set(Math.max(maxSpeed.get(), spaceShip.getSpeed()))
+        );
+
+        int countSpaceT = (int) spaceT.getFleet().stream()
+                .filter(spaceShip -> spaceShip.getSpeed()== maxSpeed.get())
+                .count();
+
+        int countTurntablG = (int) turntablGalactic.getFleet().stream()
+                .filter(spaceShip -> spaceShip.getSpeed()== maxSpeed.get())
+                .count();
+
+        String fastestFleet = (countSpaceT > countTurntablG) ? spaceT.getCompanyName()
+                : turntablGalactic.getCompanyName();
+
+        Assert.assertEquals(fastestFleet,"SpaceT");
+    }
 //    @Test
 //    public void warpshipTest(){
 //        Warpship warpship = new Warpship();
-//        Assert.assertEquals(1500,warpship.getSpeed());
+//        Assert.assertEquals(1500,warpship.getSafetyRating());
 //    }
 
 }

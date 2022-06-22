@@ -3,7 +3,6 @@ package spacetravel;
 import spacetravel.seat.HumanSeat;
 import spacetravel.seat.MartianSeat;
 import spacetravel.seat.Seat;
-
 import java.util.List;
 
 public class SpaceShip {
@@ -11,6 +10,8 @@ public class SpaceShip {
     private int speed;
     private int safetyRating;
     private List<Seat> structureOfSeats;
+    private final int price = 10;
+
 
     public SpaceShip(int capacity, int speed, int safetyRating) {
         this.capacity = capacity;
@@ -24,21 +25,24 @@ public class SpaceShip {
         this.safetyRating = safetyRating;
     }
 
+    public int getSpeed() {
+        return speed;
+    }
+
     public String bookSeat(HumanSeat humanSeat){
-        if(structureOfSeats.size()!=getCapacity()){
+        if(structureOfSeats.size()!=getCapacity() && humanSeat.getAmount().getExchangeValue()>=price){
             structureOfSeats.add(humanSeat);
             humanSeat.getMeal();
-            return humanSeat.getClass().getName();
+            return humanSeat.getClass().getSimpleName();
         } else{
             return "No seats available";
         }
     }
 
     public String bookSeat(MartianSeat martianSeat){
-        if(structureOfSeats.size()!=getCapacity()){
+        if(structureOfSeats.size()!=getCapacity() && martianSeat.getAmount().getExchangeValue()>=price){
             structureOfSeats.add(martianSeat);
-            martianSeat.getName();
-            return martianSeat.getClass().getName();
+                    return martianSeat.getClass().getSimpleName();
         }else{
             return "No seats available";
         }
@@ -50,10 +54,6 @@ public class SpaceShip {
 
     public void setCapacity(int capacity) {
         this.capacity = capacity;
-    }
-
-    public int getSpeed() {
-        return speed;
     }
 
     public void setSpeed(int speed) {
